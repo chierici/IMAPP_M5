@@ -1,0 +1,16 @@
+# prologue
+if not check_if_exec_exist():
+    install_exec()
+if not check_if_db_exist("db_path"): exit(1)
+check_md5sum("db")
+get_query("input_path")
+ 
+#main
+launch_bwa("query","db")
+launch_blast("query","db"
+ 
+# epilogue
+md5sum("outfile")
+gzip_out("outfile")
+save_out("outfile")
+clean_all()
