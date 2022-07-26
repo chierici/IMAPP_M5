@@ -1,7 +1,7 @@
 #Adapted from https://www.vultr.com/docs/how-to-setup-a-webdav-server-using-apache-on-centos-7
 
 # On The Server
-#enable the epel repository as done for condor, you should see have this file:
+# enable the epel repository as done for condor, you should see have this file:
 cat /etc/yum.repos.d/epel.repo
 
 ####
