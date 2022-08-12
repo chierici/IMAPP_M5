@@ -1,61 +1,88 @@
-# ON THE SERVER  ################################################
+################################################
+# ON THE SERVER  
 
-yum install vsftpd.x86_64
+yum -y install nano wget vsftpd.x86_64
 cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.orig
-vim /etc/vsftpd/vsftpd.conf
+nano /etc/vsftpd/vsftpd.conf
 
-#-----------------------------------------------------------
-#ADD/MODIFY the conf file to have the following lines present and not commented:
-# Do not type this as commands, should be lines in the vsftpd.conf file
+################################################
+#EDIT the config file following the instructions
 
+# line 12: no anonymous
 anonymous_enable=NO
-connect_from_port_20=YES
-chroot_local_user=NO
-userlist_enable=YES
-userlist_file=/etc/vsftpd.userlist
-userlist_deny=NO
-pasv_promiscuous=YES
-pasv_enable=YES
 
+# line 82,83: uncomment ( allow ascii mode )
+ascii_upload_enable=YES
+ascii_download_enable=YES
+
+# line 101, 102: uncomment ( enable chroot )
+chroot_local_user=YES
+chroot_list_enable=YES
+
+
+# line 110: uncomment
+ls_recurse_enable=YES
+
+# line 115: change ( if use IPv4 )
+listen=YES
+
+# line 124: change ( turn to OFF if it's not need )
+listen_ipv6=NO
+
+# add follows to the end
+# specify root directory ( if don't specify, users' home directory become FTP home directory)
+
+userlist_deny=NO
+
+# use localtime
+use_localtime=YES
+
+# turn off for seccomp filter ( if you cannot login, add this line )
+seccomp_sandbox=NO
+
+# end of the config file edit, save and close the editor
 
 #-----------------------------------------------------------------
 
-# now type the following as commands
+# now type the following commands
 # Create a user 
-useradd -m -c "Ravi Saive, CEO" -s /bin/bash ravi
+useradd -m -c "Mazinga Z" -s /bin/bash mazinga
 # Set that user password
-passwd ravi
+passwd mazinga
 
-# tyoe a password twice
+# type the password twice
 
-
-#Populate the ravi home with a file (run as user ravi)
-su - ravi -c "cp /data/BDP1_2021/trivial/shining.txt.gz /home/ravi/"
-ls -l /home/ravi
+# Populate mazinga home with a file (run as user mazinga)
+su - mazinga # we become the mazinga user to populate the homedir
+wget http://centos.mirror.garr.it/centos/7/os/x86_64/images/efiboot.img
+wget http://centos.mirror.garr.it/centos/7/os/x86_64/GPL
+wget http://centos.mirror.garr.it/centos/7/os/x86_64/EULA
+ls -l 
+exit # now you are back to root user
 
 # Add the user to the file of authorized users with the following command:
-
-echo "ravi" | tee -a /etc/vsftpd.userlist
+echo "mazinga" >> /etc/vsftpd/user_list
 
 # now check that the username is present in the userlist file
-cat /etc/vsftpd.userlist
+cat /etc/vsftpd/user_list
 
-# you should see one line containing ravi
+# you should see one line containing mazinga
 
-#we are ready to start he service
+#############################
+# start the ftp service
+systemctl start --now vsftpd
 
-systemctl start vsftpd.service
-systemctl status vsftpd.service
-
+# verify it's working fine
+systemctl status vsftpd
 
 ###########################################################
 
 ### ON THE CLIENT   #######################################
 
-yum install ftp
-ftp 172.31.41.138   # USE THE FTP SERVER PRIVATE IP!!
+yum -y install ftp
+ftp <PRIVATE_IP>   # USE THE FTP SERVER PRIVATE IP!!
 
-#now autentiate as ravi and type the ravi's password
+# now autentiate as mazinga and type the password
 
 #in the FTP command line interface tpe ftp commands
 ls
@@ -64,10 +91,4 @@ help
 binary # set binary transfer file
 put filename
 get filename
-exit #or CTRL+D
-
-##############################################################
-##############################################################
-
-# Now repeat the transfer from a machine outside the securiyt group, i.e. your laptop or a VM on another security group - hint at lease port 20 and 21 sshould be accessible
-#more info on ftp ports: https://www.jscape.com/blog/bid/80512/active-v-s-passive-ftp-simplified
+exit # or CTRL+D
