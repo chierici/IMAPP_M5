@@ -1,26 +1,40 @@
-#on the server:
- 
- yum install nfs-utils rpcbind
- systemctl enable nfs-server
- systemctl enable rpcbind
- systemctl enable nfs-lock
- systemctl enable nfs-idmap
- systemctl start rpcbind
- systemctl start nfs-server
- systemctl start nfs-lock
- systemctl start nfs-idmap
- systemctl status nfs
- vim /etc/exports
-cat /etc/exports
+####################
+# On the server
+
+# Commands to be executed by root user
+mkdir /data
+chmod 755 /data
+touch /data/nfs-test
+yum -y install nfs-utils nano
+
+nano /etc/exports
       /data  <destination_host IP - USE the private IP>(rw,sync,no_wdelay)
- 
-exportfs -r
- 
-#On the client:
- 
- yum install nfs-utils
- mount -t nfs -o ro,nosuid <your_server_ip>:/data /data
- ll /data/
- umount /data
- cat /etc/fstab
+
+cat /etc/exports  # verify your editing
+
+# now we start the nfs server
+systemctl enable --now rpcbind nfs-server
+
+# Verify the server is working properly
+systemctl status nfs-server
+
+exportfs   # verify what we are exporting to whom
+
+# In case we have firewall active
+firewall-cmd --add-service=nfs --permanent 
+firewall-cmd --reload 
+
+####################
+# On the client
+
+# Commands to be executed by root user 
+yum -y install nfs-utils
+mount -t nfs <your_server_ip>:/data /data
+ll /data/
+cat /etc/mtab | grep data
+umount /data
+
+# in case we want to automount the FS at boot time
+nano /etc/fstab
+# add the following line at the end of the file
 <SERVER_PRIVATE_IP>:/data /data   nfs defaults        0 0
