@@ -1,38 +1,31 @@
-#INSTALL DEPENDENCIES
-yum install wget
+# INSTALL DEPENDENCIES
+yum install wget nano
 wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 yum localinstall epel-release-latest-7.noarch.rpm
 yum clean all
  
  
-#INSTALL CONDOR REPOs and PACKAGES
-wget http://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-stable-rhel7.repo
-cp htcondor-stable-rhel7.repo /etc/yum.repos.d/
-yum install condor-all
+# INSTALL CONDOR REPOs and PACKAGES
+curl https://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-stable-rhel7.repo -o /etc/yum.repos.d/htcondor-stable-rhel7.repo
+yum -y install condor-all
  
-#CONDOR BASIC CONFIGURATION
-cd
-vim /etc/condor/condor_config
+# CONDOR BASIC CONFIGURATION
+nano /etc/condor/condor_config
 systemctl status condor
-systemctl start condor
-systemctl enable condor
+systemctl enable --now condor
 systemctl status condor
-ps -aux | grep condor
+ps -ef | grep condor
  
-# END - SOME HINTS BELOW
-1) Security Group must allow tcp for ports 0 - 65535 from the same security group, i.e.:
+# Some hints on network
+Security Group must allow tcp for ports 0 - 65535 from the same security group, i.e.:
  All TCP    TCP      0 - 65535     sg-008742ba0467986fe (aws_condor)
+
 Security group must allow ping from the same security group, i.e.:
  All    ICMP-IPv4   All    N/A     sg-008742ba0467986fe (aws_condor)
-Security group must allow ssh on port 22 from everywhere as ususal
+
+Security group must allow ssh on port 22 from everywhere as usual
  
-##################################
- 
- 
-#-------------------------------------
-# In the config file add at the end
-# the most important variable is the CONDOR_HOST running the master
- 
+################################################################### 
 # ADD the following lines to your condor_config file
 # CHANGE THE FOLLOWING IP TO YOUR MASTER IP
 CONDOR_HOST = __put here the master Private IP address, i.e.: 172.31.25.191 ___
@@ -40,41 +33,42 @@ CONDOR_HOST = __put here the master Private IP address, i.e.: 172.31.25.191 ___
 # on the master
 DAEMON_LIST = COLLECTOR, MASTER, NEGOTIATOR, STARTD, SCHEDD
  
-# #on the nodes
-# #DAEMON_LIST = MASTER, STARTD
+# on the nodes
+DAEMON_LIST = MASTER, STARTD
  
- 
+# on both
 HOSTALLOW_READ = *
 HOSTALLOW_WRITE = *
 HOSTALLOW_ADMINISTRATOR = *
-#---------------------------------------------
+
  
+# Depending on your flavor of Unix. On a central manager machine that can submit jobs as well as execute them, there will be processes for:
  
-#Depending on your flavor of Unix. On a central manager machine that can submit jobs as well as execute them, there will be processes for:
+#    condor_master
+#    condor_collector
+#    condor_negotiator
+#    condor_startd
+#    condor_schedd
  
-    condor_master
-    condor_collector
-    condor_negotiator
-    condor_startd
-    condor_schedd
+# On a central manager machine that does not submit jobs nor execute them, there will be processes for:
  
-On a central manager machine that does not submit jobs nor execute them, there will be processes for:
+#    condor_master
+#    condor_collector
+#    condor_negotiator
  
-    condor_master
-    condor_collector
-    condor_negotiator
+# For a machine that only submits jobs, there will be processes for:
  
-For a machine that only submits jobs, there will be processes for:
+#    condor_master
+#    condor_schedd
  
-    condor_master
-    condor_schedd
+# For a machine that only executes jobs, there will be processes for:
+#    condor_master
+#    condor_startd
  
-For a machine that only executes jobs, there will be processes for:
-    condor_master
-    condor_startd
- 
-USE PRIVATE IPs!!
-[root@aws_ui1 ~]# cat   /etc/condor/condor_config
+# REMEMBER TO USE PRIVATE IPs!!
+
+# In the end the file on the master should look like this
+cat   /etc/condor/condor_config
 ######################################################################
 ##
 ##  condor_config
