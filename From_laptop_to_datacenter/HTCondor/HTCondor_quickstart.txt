@@ -45,6 +45,7 @@ cp inout.sub inout10.sub
 
 # add 10 after directive "queue"
 # modify inout.out in inout$(Process).out
+# modify log and error filename
 
 condor_submit inout10.sub
 
@@ -61,7 +62,8 @@ cp inout.sub inout10dir.sub
 
 # add 10 after directive "queue"
 # Add this line before log one:
-# initialdir              = run$(Process)
+initialdir              = run$(Process)
+# modify log and error filename
 
 condor_submit inout10dir.sub
 
