@@ -1,3 +1,3 @@
 #!/bin/bash
-> outfile
+> $3
 cat $1 $2 >> $3
