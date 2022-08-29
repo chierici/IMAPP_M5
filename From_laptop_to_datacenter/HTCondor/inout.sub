@@ -1,5 +1,5 @@
 executable              = inout.sh
-arguments               = "file1 file2 outfile"
+arguments               = "file1 file2 inout.out"
 transfer_input_files    = file1,file2
 should_transfer_files   = IF_NEEDED
 when_to_transfer_output = ON_EXIT
