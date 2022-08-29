@@ -1,49 +1,19 @@
-#####################################
-# get the condor dir with examples
- 
-cp -r /data/BDP1_2022/condor/ .
-cd condor
-#####################################
- 
-#### inspect files ##################
-#### for first example ##############
-cat myexec.sh
-cat world.txt
-vim first_batch.job
-#####################################
- 
-######### check the condor cluster###
-condor_status
-######################################
- 
- 
-# now the condor submission #########
-condor_submit first_batch.job
- 
-### check job status ################
+# Reference documentation: https://htcondor.readthedocs.io/en/latest/users-manual/quick-start-guide.html#quick-start-guide
+
+# Download the HTCondor folder on your linux machine
+chmod 755 sleep.sh
+
+# Now we submit the job to our system
+condor_submit sleep.sub
+
+# Quickly after submitting the job try these commands:
 condor_q
 condor_q -better-analyze  
-condor_q -better-analyze  < jobID >
-condor_history < jobID >  #for already done jobs
-######################################
- 
-### inspect out files ################
-cat file1out
-cat file2out
-less condor.out
-less condor.log
-less condor.error
- 
- 
-################  now the HG example with bwa ###############
-#############################################################
- 
-cd hg
-vim  align.py  
-vim bwa_batch.job  
-less condor.error  
-less condor.log  
-less condor.out  
-cat md5.txt
- 
-###############################################################
+
+# When the job is finished try this:
+condor_history <jobID>
+
+# Examine the job log file and also the error log:
+less sleep.out
+less sleep.err
+
