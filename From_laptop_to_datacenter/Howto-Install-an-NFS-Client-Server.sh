@@ -28,6 +28,7 @@ firewall-cmd --reload
 # On the client
 
 # Commands to be executed by root user 
+mkdir /data
 yum -y install nfs-utils
 mount -t nfs <your_server_ip>:/data /data
 ll /data/
