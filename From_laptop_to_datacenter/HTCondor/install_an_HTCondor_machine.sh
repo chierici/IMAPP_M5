@@ -27,12 +27,23 @@ Security group must allow ssh on port 22 from everywhere as usual
  
 ################################################################### 
 # ADD the following lines to your condor_config file
+###################################################################
+
 # CHANGE THE FOLLOWING IP TO YOUR MASTER IP
 CONDOR_HOST = __put here the master Private IP address, i.e.: 172.31.25.191 ___
  
 # on the master
 DAEMON_LIST = COLLECTOR, MASTER, NEGOTIATOR, STARTD, SCHEDD
- 
+
+# on both
+HOSTALLOW_READ = *
+HOSTALLOW_WRITE = *
+HOSTALLOW_ADMINISTRATOR = *
+
+#############################################################
+### Do not copy/paste the following lines on the master node.
+#############################################################
+
 # on the nodes
 DAEMON_LIST = MASTER, STARTD
  
