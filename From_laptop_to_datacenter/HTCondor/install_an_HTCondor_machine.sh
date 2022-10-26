@@ -1,5 +1,5 @@
 # INSTALL DEPENDENCIES
-yum install wget nano
+yum install -y wget nano
 wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 yum localinstall epel-release-latest-7.noarch.rpm
 yum clean all
@@ -7,7 +7,7 @@ yum clean all
  
 # INSTALL CONDOR REPOs and PACKAGES
 curl https://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-stable-rhel7.repo -o /etc/yum.repos.d/htcondor-stable-rhel7.repo
-yum -y install condor-all
+yum -y install minicondor
  
 # CONDOR BASIC CONFIGURATION
 nano /etc/condor/condor_config
