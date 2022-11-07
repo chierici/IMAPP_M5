@@ -15,11 +15,6 @@ anonymous_enable=NO
 ascii_upload_enable=YES
 ascii_download_enable=YES
 
-# line 101, 102: uncomment ( enable chroot )
-chroot_local_user=YES
-chroot_list_enable=YES
-
-
 # line 110: uncomment
 ls_recurse_enable=YES
 
