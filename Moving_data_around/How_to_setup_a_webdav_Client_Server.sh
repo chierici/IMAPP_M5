@@ -16,7 +16,7 @@ sed -i 's/^/#&/g' /etc/httpd/conf.d/welcome.conf
 sed -i "s/Options Indexes FollowSymLinks/Options FollowSymLinks/" /etc/httpd/conf/httpd.conf
 
 # Start the service 
-systemctl start httpd.service
+systemctl enable --now httpd.service
 
 # issue this command
 httpd -M | grep dav
@@ -62,6 +62,9 @@ DavLockDB /var/www/html/DavLock
 # restart httpd service to load webdav configuration
 systemctl restart httpd.service
 
+# If SELinux is enabled, add rules to allow accesses to target WebDAV directory:
+chcon -R -t httpd_sys_rw_content_t /var/www/html/webdav
+semanage fcontext -a -t httpd_sys_rw_content_t /var/www/html/webdav
 
 #############################################################
 
