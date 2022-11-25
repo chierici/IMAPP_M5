@@ -65,7 +65,7 @@ mkdir -p containers/simple
 cp Dockerfile index.html containers/simple/
 cd containers/simple/
 
-# Create a Dockerfile like this
+# Dockerfile should be like this
 # cat Dockerfile
 FROM ubuntu
 RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y apache2
@@ -74,7 +74,7 @@ COPY index.html /var/www/html/
 EXPOSE 80
 CMD ["apachectl", "-D", "FOREGROUND"]
 
-# Create a index.html file like this
+# index.html file should be like this
 # cat index.html
 <!DOCTYPE html>
 <html>
