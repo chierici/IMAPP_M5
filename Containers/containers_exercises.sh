@@ -1,6 +1,9 @@
 #######################################
 ####### INSTALL DOCKER on CENTOS7 
 #######################################
+# become superuser
+sudo su -
+
 # installing useful tools
 yum -y install nano wget curl
 
