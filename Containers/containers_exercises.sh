@@ -133,8 +133,11 @@ docker volume prune
 #########  Docker compose
 #########################################
 yum -y install docker-compose
+mkdir p $HOME/containers/compose
+cd $HOME/containers/compose
+nano docker-compose.yml
 
-# cat docker-compose.yml
+# copy this file into the editor window
 version: '3'
 services:
    database:
