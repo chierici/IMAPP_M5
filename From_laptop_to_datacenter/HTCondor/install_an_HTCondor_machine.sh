@@ -1,14 +1,16 @@
 # INSTALL DEPENDENCIES
 yum install -y wget nano git
 
-wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-yum localinstall epel-release-latest-7.noarch.rpm
-yum clean all
- 
- 
-# INSTALL CONDOR REPOs and PACKAGES
-curl https://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-stable-rhel7.repo -o /etc/yum.repos.d/htcondor-stable-rhel7.repo
-yum -y install minicondor
+# Clone the repository
+git clone https://github.com/chierici/IMAPP_2023
+
+# Install minicondor on EL8
+wget https://research.cs.wisc.edu/htcondor/yum/RPM-GPG-KEY-HTCondor
+rpm --import RPM-GPG-KEY-HTCondor
+cd /etc/yum.repos.d
+wget https://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-stable-rhel8.repo
+yum config-manager --set-enabled powertools
+yum install -y minicondor
  
 # CONDOR BASIC CONFIGURATION
 nano /etc/condor/condor_config
