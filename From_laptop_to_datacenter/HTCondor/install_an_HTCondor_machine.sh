@@ -1,5 +1,6 @@
 # INSTALL DEPENDENCIES
-yum install -y wget nano
+yum install -y wget nano git
+
 wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 yum localinstall epel-release-latest-7.noarch.rpm
 yum clean all
