@@ -29,14 +29,14 @@ firewall-cmd --reload
 # On the client
 
 # Commands to be executed by root user 
-mkdir /data
+mkdir /data_mounted
 yum -y install nfs-utils
-mount -t nfs <your_server_ip>:/data /data
-ll /data/
-cat /etc/mtab | grep data
-umount /data
+mount -t nfs <your_server_ip>:/data /data_mounted
+ll /data_mounted/
+cat /etc/mtab | grep data_mounted
+umount /data_mounted
 
 # in case we want to automount the FS at boot time
 nano /etc/fstab
 # add the following line at the end of the file
-<SERVER_PRIVATE_IP>:/data /data   nfs defaults        0 0
+<SERVER_PRIVATE_IP>:/data /data_mounted   nfs defaults        0 0
