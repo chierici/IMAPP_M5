@@ -2,6 +2,7 @@
 # On the server
 
 # Commands to be executed by root user
+sudo su -
 mkdir /data
 chmod 755 /data
 touch /data/nfs-test
