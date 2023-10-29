@@ -26,16 +26,9 @@ httpd -M | grep dav
 #   dav_fs_module (shared)
 #   dav_lock_module (shared)
 
-mkdir /home/webdav
-chown apache:apache /home/webdav
-chmod 755 /home/webdav
-
-# you need to create a user account, say it is "user001", to access the WebDAV server, and then input your desired password. 
-# Later, you will use this user account to log into your WebDAV server.
-
-htpasswd -c /etc/httpd/.htpasswd user001
-chown root:apache /etc/httpd/.htpasswd
-chmod 640 /etc/httpd/.htpasswd
+mkdir /var/www/html/webdav
+chown apache:apache /var/www/html/webdav
+chmod 755 /var/www/html/webdav
 
 # Create a virtual host for WebDAV
 
@@ -43,21 +36,13 @@ nano /etc/httpd/conf.d/webdav.conf
 
 # Populate it with the following content
 
-<IfModule mod_dav_fs.c>
-    DAVLockDB /var/lib/dav/lockdb
-</IfModule>
-Alias /webdav /home/webdav
-<Location /webdav>
-    DAV On
-    Options None
-    AuthType Basic
-    AuthName WebDAV
-    AuthUserFile /etc/httpd/conf/.htpasswd
-    <RequireAny>
-        Require method GET POST OPTIONS
-        Require valid-user
-    </RequireAny>
-</Location>
+<Directory /var/www/html/webdav>
+ Dav on
+</Directory>
+<VirtualHost *:80>
+ ServerName mydav.host.com
+ Alias /webdav /var/www/webdav
+</VirtualHost>
 
 # restart httpd service to load webdav configuration
 systemctl restart httpd.service
@@ -76,7 +61,7 @@ touch pippo pluto
 
 # To upload a file in your home dir, like "/home/user/abc.txt" to the WebDAV server:
 
-dav:/webdav/> put /home/user/abc.txt
+dav:/webdav/> put pippo
 
 # To create a directory "dir1" on the WebDAV server:
 
