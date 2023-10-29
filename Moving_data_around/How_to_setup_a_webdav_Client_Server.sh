@@ -41,7 +41,7 @@ nano /etc/httpd/conf.d/webdav.conf
 </Directory>
 <VirtualHost *:80>
  ServerName mydav.host.com
- Alias /webdav /var/www/webdav
+ Alias /webdav /var/www/html/webdav
 </VirtualHost>
 
 # restart httpd service to load webdav configuration
