@@ -58,7 +58,7 @@ semanage fcontext -a -t httpd_sys_rw_content_t /var/www/html/webdav
 yum -y install cadaver
 touch pippo pluto
 
-cadaver http://<your-server-ip>/webdav/
+cadaver http://localhost/webdav/
 
 
 # To upload a file in your home dir, like "/home/user/abc.txt" to the WebDAV server:
