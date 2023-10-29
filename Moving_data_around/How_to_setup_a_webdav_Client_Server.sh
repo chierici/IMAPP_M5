@@ -26,9 +26,9 @@ httpd -M | grep dav
 #   dav_fs_module (shared)
 #   dav_lock_module (shared)
 
-mkdir /var/www/html/webdav
-chown -R apache:apache /var/www/html
-chmod -R 755 /var/www/html
+mkdir /home/webdav
+chown apache:apache /home/webdav
+chmod 755 /home/webdav
 
 # you need to create a user account, say it is "user001", to access the WebDAV server, and then input your desired password. 
 # Later, you will use this user account to log into your WebDAV server.
@@ -43,28 +43,28 @@ nano /etc/httpd/conf.d/webdav.conf
 
 # Populate it with the following content
 
-DavLockDB /var/www/html/DavLock
-<VirtualHost *:80>
-    ServerAdmin webmaster@localhost
-    DocumentRoot /var/www/html/webdav/
-    ErrorLog /var/log/httpd/error.log
-    CustomLog /var/log/httpd/access.log combined
-    Alias /webdav /var/www/html/webdav
-    <Directory /var/www/html/webdav>
-        DAV On
-        AuthType Basic
-        AuthName "webdav"
-        AuthUserFile /etc/httpd/.htpasswd
+<IfModule mod_dav_fs.c>
+    DAVLockDB /var/lib/dav/lockdb
+</IfModule>
+Alias /webdav /home/webdav
+<Location /webdav>
+    DAV On
+    Options None
+    AuthType Basic
+    AuthName WebDAV
+    AuthUserFile /etc/httpd/conf/.htpasswd
+    <RequireAny>
+        Require method GET POST OPTIONS
         Require valid-user
-    </Directory>
-</VirtualHost>
+    </RequireAny>
+</Location>
 
 # restart httpd service to load webdav configuration
 systemctl restart httpd.service
 
 # If SELinux is enabled, add rules to allow accesses to target WebDAV directory:
-chcon -R -t httpd_sys_rw_content_t /var/www/html/webdav
-semanage fcontext -a -t httpd_sys_rw_content_t /var/www/html/webdav
+chcon -R -t httpd_sys_rw_content_t /home/webdav
+semanage fcontext -a -t httpd_sys_rw_content_t /home/webdav
 
 #############################################################
 
