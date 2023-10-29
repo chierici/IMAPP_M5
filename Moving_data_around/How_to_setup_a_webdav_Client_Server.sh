@@ -7,7 +7,7 @@ yum -y install epel-release
 ####
 
 # Install Apache using YUM:
-yum -y install nano httpd
+yum -y install nano httpd policycoreutils-python-utils
 
 # Disable Apache's default welcome page:
 sed -i 's/^/#&/g' /etc/httpd/conf.d/welcome.conf
