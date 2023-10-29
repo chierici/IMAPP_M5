@@ -48,8 +48,8 @@ nano /etc/httpd/conf.d/webdav.conf
 systemctl restart httpd.service
 
 # If SELinux is enabled, add rules to allow accesses to target WebDAV directory:
-chcon -R -t httpd_sys_rw_content_t /home/webdav
-semanage fcontext -a -t httpd_sys_rw_content_t /home/webdav
+chcon -R -t httpd_sys_rw_content_t /var/www/html/webdav
+semanage fcontext -a -t httpd_sys_rw_content_t /var/www/html/webdav
 
 #############################################################
 
