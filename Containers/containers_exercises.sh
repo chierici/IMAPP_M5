@@ -1,5 +1,5 @@
 #######################################
-####### INSTALL DOCKER on CENTOS7 
+####### INSTALL DOCKER on CENTOS8
 #######################################
 # become superuser
 sudo su -
@@ -17,9 +17,6 @@ yum --enablerepo=docker-ce-stable -y install docker-ce
 # start docker
 systemctl enable --now docker
 systemctl status docker
-
-# now you should give to users that need to use docker the docker group
-usermod -g docker <username> # not needed for user root
 
 #######################
 #### start using docker
