@@ -5,7 +5,10 @@
 sudo su -
 
 # installing useful tools
-yum -y install nano wget curl
+yum -y install nano wget curl git
+
+# download the examples from github
+git clone https://github.com/chierici/IMAPP_2023.git
 
 # install the docker repo
 curl https://download.docker.com/linux/centos/docker-ce.repo -o /etc/yum.repos.d/docker-ce.repo 
@@ -59,8 +62,9 @@ docker push ataruz/imap_2022:ubuntu_with_ping_1.0
 # Bulding docker images using Dockerfiles
 
 mkdir -p containers/simple
-cp Dockerfile index.html containers/simple/
-cd containers/simple/
+cd IMAPP_2023/Containers/
+cp Dockerfile index.html ~/containers/simple/
+cd ~/containers/simple/
 
 # Dockerfile should be like this
 # cat Dockerfile
@@ -77,7 +81,7 @@ CMD ["apachectl", "-D", "FOREGROUND"]
 <html>
 <h1>Hello from a web server running inside a container!</h1>
 
-This is an exercise for the IMAPP2022 course.
+This is an exercise for the IMAPP2023 course.
 </html>
 
 # let's put all this together
