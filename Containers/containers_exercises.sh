@@ -2,6 +2,8 @@
 ####### INSTALL DOCKER on CENTOS8
 #######################################
 
+# add port 8080 to firewall on google cloud dashboard. "default-allow-http"
+
 # become superuser
 sudo su -
 
@@ -129,13 +131,18 @@ docker volume inspect some-volume
 docker volume rm some-volume
 
 docker run -i -t --name myname -v some-volume:/app ubuntu /bin/bash
+# exit the docker
 docker volume rm <volume_name>
+# is previous command working? If not try removing the docker first
+docker rm <docker ID>
 docker volume prune
 
 #########################################
 #########  Docker compose
 #########################################
-yum -y install docker-compose
+cd $HOME
+curl -L "https://github.com/docker/compose/releases/download/v2.6.0/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
 mkdir p $HOME/containers/compose
 cd $HOME/containers/compose
 nano docker-compose.yml
