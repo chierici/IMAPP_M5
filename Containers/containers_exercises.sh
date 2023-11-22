@@ -1,11 +1,13 @@
 #######################################
 ####### INSTALL DOCKER on CENTOS8
 #######################################
+
 # become superuser
 sudo su -
 
 # installing useful tools
 yum -y install nano wget curl git
+yum install --enablerepo=powertools elinks -y
 
 # download the examples from github
 git clone https://github.com/chierici/IMAPP_2023.git
@@ -55,8 +57,8 @@ docker ps -a
 
 docker login
 docker images
-docker tag 5c2538cecdc2 ataruz/imap_2022:ubuntu_with_ping_1.0
-docker push ataruz/imap_2022:ubuntu_with_ping_1.0
+docker tag 5c2538cecdc2 ataruz/imap_2023:ubuntu_with_ping_1.0
+docker push ataruz/imap_2023:ubuntu_with_ping_1.0
 
 ############################################
 # Bulding docker images using Dockerfiles
@@ -93,13 +95,13 @@ docker run -d -p 8080:80 ubuntu_web_server
 docker ps
 ip a
 
-# Check that everything works opening in a browser this page: http://<VM_ip_address>:8080/
-# PAY ATTENTION TO THE SECURITY GROUP
+# Check that everything works opening in a elinks the page:
+elinks http://<VM_ip_address>:8080
 
 # to attach a shell...
 docker exec -ti  <docker ID> /bin/bash 
 
-# inside the container verify the web server is running
+# inside the container verify the web server is running (you should see apache2 processes running)
 ps -ef
 
 # exit the container with ctrl+d
