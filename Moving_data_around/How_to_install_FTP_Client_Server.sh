@@ -1,15 +1,13 @@
 ################################################
 # ON THE SERVER  
 
-yum -y install nano wget vsftpd.x86_64
+sudo -i
+dnf -y install nano wget vsftpd.x86_64
 cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.orig
 nano /etc/vsftpd/vsftpd.conf
 
 ################################################
 #EDIT the config file following the instructions
-
-# line 12: no anonymous
-anonymous_enable=NO
 
 # line 82,83: uncomment ( allow ascii mode )
 ascii_upload_enable=YES
@@ -18,10 +16,10 @@ ascii_download_enable=YES
 # line 110: uncomment
 ls_recurse_enable=YES
 
-# line 115: change ( if use IPv4 )
+# line 115: change
 listen=YES
 
-# line 124: change ( turn to OFF if it's not need )
+# line 124: change 
 listen_ipv6=NO
 
 # add follows to the end
@@ -49,9 +47,9 @@ passwd mazinga
 
 # Populate mazinga home with a file (run as user mazinga)
 su - mazinga # we become the mazinga user to populate the homedir
-wget http://centos.mirror.garr.it/centos/7/os/x86_64/images/efiboot.img
-wget http://centos.mirror.garr.it/centos/7/os/x86_64/GPL
-wget http://centos.mirror.garr.it/centos/7/os/x86_64/EULA
+wget https://repo.almalinux.org/almalinux/9.4/BaseOS/x86_64/os/images/efiboot.img
+wget https://repo.almalinux.org/almalinux/9.4/BaseOS/x86_64/os/LICENSE
+wget https://repo.almalinux.org/almalinux/9.4/BaseOS/x86_64/os/EULA
 ls -l 
 exit # now you are back to root user
 
@@ -74,8 +72,11 @@ systemctl status vsftpd
 
 ### ON THE CLIENT   #######################################
 
-yum -y install ftp
-ftp <PRIVATE_IP>   # USE THE FTP SERVER PRIVATE IP!!
+dnf -y install ftp
+ftp <INTERNAL_IP>   # USE THE FTP SERVER PRIVATE IP!!
+
+# create a dummy file
+touch from_client
 
 # now autentiate as mazinga and type the password
 
@@ -84,6 +85,12 @@ ls
 pwd
 help
 binary # set binary transfer file
-put filename
-get filename
+put from_client
+get EULA
 exit # or CTRL+D
+
+# Now chech root home dir
+ls -l
+
+# Now check mazinga home dir
+ls -l /home/mazinga
