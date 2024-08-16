@@ -31,3 +31,4 @@ Security group must allow ping from the same security group, i.e.:
 
 Security group must allow ssh on port 22 from everywhere as usual
  
+# Now that HTCondor is installed, proceed with HTCondor_quickstart.txt 
