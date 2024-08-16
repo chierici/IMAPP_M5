@@ -1,8 +1,14 @@
 ###############################
 # Inspect the storage on VM
-sudo -if        # we neet do be root@ip-172-31-12-71
+sudo -i         # we need do be root
 df -h           # check the mounted filesystem
 lsblk           # list the attached disks
+
+###############################
+# Now add the disk from the vm web interface, specify 10GB size.
+# Issue again this command to see sdb appear in the list of disks:
+
+lsblk
 
 ###############################
 # We partition the new disk
@@ -19,7 +25,7 @@ nano /etc/fstab         # edit the fstab file
 UUID=<the uuid associated to sdb1>     /data2  ext4 defaults 0 0
 
 ###############################
-#Verify the fstab file
+# Verify the fstab file
 cat /etc/fstab
 
 # it should contain the line regarding data2 mount point
@@ -28,6 +34,7 @@ cat /etc/fstab
 # We now mount the new filesystem on /data2
 df -h
 mount -a                # mount all the filesystem listed in the fstab file
+systemctl daemon-reload
 df -h                   # check the differences
 touch /data2/foobar
 ll /data2
