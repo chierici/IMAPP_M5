@@ -5,7 +5,7 @@
 yum install -y wget nano git
 
 # Clone the repository
-git clone https://github.com/chierici/IMAPP_2023
+git clone https://github.com/chierici/IMAPP_2024
 
 # Install minicondor on EL8
 wget https://research.cs.wisc.edu/htcondor/yum/RPM-GPG-KEY-HTCondor
