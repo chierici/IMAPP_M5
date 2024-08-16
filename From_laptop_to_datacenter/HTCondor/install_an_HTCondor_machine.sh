@@ -1,3 +1,6 @@
+#
+# This hands-on requires el8 OS
+
 # INSTALL DEPENDENCIES
 yum install -y wget nano git
 
