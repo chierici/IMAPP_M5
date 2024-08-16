@@ -4,7 +4,7 @@
 
 # Download the HTCondor folder on your linux machine
 
-git clone https://github.com/chierici/IMAPP_2023
+git clone https://github.com/chierici/IMAPP_2024
 cd IMAPP_2023/From_laptop_to_datacenter/HTCondor/
 
 ##########################
