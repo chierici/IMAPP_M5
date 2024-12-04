@@ -12,7 +12,7 @@ yum -y install nano wget curl git
 yum install --enablerepo=powertools elinks -y
 
 # download the examples from github
-git clone https://github.com/chierici/IMAPP_2023.git
+git clone https://github.com/chierici/IMAPP_2024.git
 
 # install the docker repo
 curl https://download.docker.com/linux/centos/docker-ce.repo -o /etc/yum.repos.d/docker-ce.repo 
