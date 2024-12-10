@@ -85,7 +85,7 @@ CMD ["apachectl", "-D", "FOREGROUND"]
 <html>
 <h1>Hello from a web server running inside a container!</h1>
 
-This is an exercise for the IMAPP2023 course.
+This is an exercise for the IMAPP course.
 </html>
 
 # let's put all this together
