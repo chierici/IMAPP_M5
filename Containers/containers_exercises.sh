@@ -190,3 +190,12 @@ docker-compose stop
 docker-compose down
 docker images
 docker system prune
+
+#########################################
+#########  udocker
+#########################################
+git clone --depth=1 https://github.com/indigo-dc/udocker.git
+export PATH=`pwd`/udocker/udocker:$PATH
+udocker search ubuntu
+
+
