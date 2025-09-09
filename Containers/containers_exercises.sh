@@ -5,11 +5,11 @@
 # add port 8080 to firewall on google cloud dashboard. "default-allow-http"
 
 # become superuser
-sudo su -
+sudo -i
 
 # installing useful tools
 yum -y install nano wget curl git
-yum install --enablerepo=powertools elinks -y
+yum --enablerepo=devel install -y elinks
 
 # download the examples from github
 git clone https://github.com/chierici/IMAPP_2024.git
@@ -192,10 +192,34 @@ docker images
 docker system prune
 
 #########################################
-#########  udocker
+#########  apptainer
 #########################################
-git clone --depth=1 https://github.com/indigo-dc/udocker.git
-export PATH=`pwd`/udocker/udocker:$PATH
-udocker search ubuntu
+yum install -y epel-release
+yum install -y apptainer
 
+apptainer help
+apptainer pull docker://alpine
+ls   # you should see a .sif file, the apptainer container
+
+# with the following command you should see "Rocky Linux", you are not inside a container
+cat /etc/os-release|grep ^NAME 
+
+# with the following command you should see "Alpine Linux", you execute the command inside the container
+apptainer run alpine_latest.sif cat /etc/os-release|grep ^NAME
+
+# Other examples, let's try lolcow
+apptainer pull docker://gcr.io/apptainer/lolcow
+apptainer shell lolcow_latest.sif
+cowsay "hello IMAPP students"
+exit
+
+apptainer exec lolcow_latest.sif cowsay "IMAPP rocks"
+
+# Apptainer containers may contain runscripts. These are user-defined scripts that define the actions a container should perform when someone runs it. 
+# The runscript can be triggered with the run command, or simply by calling the container as though it were an executable.
+
+apptainer run lolcow_latest.sif 
+
+# if you are interested in doing some practice, check this quick start page:
+# https://apptainer.org/docs/user/main/quick_start.html
 
