@@ -4,8 +4,8 @@
 
 # Download the HTCondor folder on your linux machine
 
-git clone https://github.com/chierici/IMAPP_2024
-cd IMAPP_2024/From_laptop_to_datacenter/HTCondor/
+git clone https://github.com/chierici/IMAPP_M5
+cd IMAPP_M5/From_laptop_to_datacenter/HTCondor/
 
 ##########################
 # First example: sleep job
@@ -47,13 +47,15 @@ less inout.err
 # modify inout.sub 
 cp inout.sub inout10.sub
 nano inout10.sub
-  # add 10 after directive "queue"
-  # modify inout.out in inout$(Process).out
-  # modify log and error filename
+# modify inout.out in inout$(Process).out
+# modify log and error filename like you did with inout.out file
+# add 10 after directive "queue"
 
 condor_submit inout10.sub
 
 # Examine the log, error and all the 10 output files
+# Clean the folder for the next ecercise:
+rm -rf inout*log inout*err inout*out
 
 ################################
 # Fourth example: inout10dir job
@@ -64,11 +66,12 @@ for i in `seq 0 9`;do mkdir run$i; cp file1 file2 run$i;done
 # modify inout.sub 
 cp inout.sub inout10dir.sub
 nano inout10dir.sub
-  # add 10 after directive "queue"
-  # Add this line before log one:
-  initialdir              = run$(Process)
+# Add this line before log one:
+initialdir              = run$(Process)
+# add 10 after directive "queue"
   
 condor_submit inout10dir.sub
 
 # Examine the log, error and output inside each directory
+
 
