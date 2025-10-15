@@ -1,11 +1,9 @@
 #
-# This hands-on requires el8 OS
+# This hands-on requires el8 OS (so please install Rocky Linux 8 optimized for GCP)
 
 # INSTALL DEPENDENCIES
+sudo -i
 yum install -y wget nano git
-
-# Clone the repository
-git clone https://github.com/chierici/IMAPP_2024
 
 # Install minicondor on EL8
 wget https://research.cs.wisc.edu/htcondor/yum/RPM-GPG-KEY-HTCondor
@@ -32,3 +30,4 @@ Security group must allow ping from the same security group, i.e.:
 Security group must allow ssh on port 22 from everywhere as usual
  
 # Now that HTCondor is installed, proceed with HTCondor_quickstart.txt 
+
