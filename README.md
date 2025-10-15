@@ -1,1 +1,1 @@
-Scripts, exercises and demos for course "Introduction to data processing infrastructures for scientific applications"
+Scripts, exercises and demos for course "Computer Science for High Energy Physics"
