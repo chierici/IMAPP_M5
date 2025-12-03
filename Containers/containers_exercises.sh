@@ -2,7 +2,7 @@
 ####### INSTALL DOCKER on Rocky 9
 #######################################
 
-# add port 8080 to firewall on google cloud dashboard. "default-allow-http"
+# add port 8080 to firewall on google cloud dashboard. See teacher screen.
 
 # become superuser
 sudo -i
@@ -85,7 +85,7 @@ CMD ["apachectl", "-D", "FOREGROUND"]
 <html>
 <h1>Hello from a web server running inside a container!</h1>
 
-This is an exercise for the IMAPP course.
+This is an exercise for the IMAPP_M5 course.
 </html>
 
 # let's put all this together
@@ -119,8 +119,6 @@ head -c 10M < /dev/urandom > dummy_file
 docker run -v $HOME/containers/scratch/:/container_data -i -t ubuntu /bin/bash
 # try: ll /container_data from inside the container
 
-docker stop <docker ID>
-
 ##################################################
 # attach a volume to a docker container
 
@@ -129,19 +127,24 @@ docker volume create some-volume
 docker volume ls 
 docker volume inspect some-volume
 docker volume rm some-volume
+docker volume ls  # volume is gone
 
+docker volume create some-volume
 docker run -i -t --name myname -v some-volume:/app ubuntu /bin/bash
-# exit the docker
+
+# remove the volume
 docker volume rm <volume_name>
 # is previous command working? If not try removing the docker first
-docker rm <docker ID>
-docker volume prune
+
+docker ps -a
+docker rm <id of myname container>
+docker volume rm <volume_name>
 
 #########################################
 #########  Docker compose
 #########################################
 cd $HOME
-curl -L "https://github.com/docker/compose/releases/download/v2.6.0/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
+curl -L "https://github.com/docker/compose/releases/download/v5.0.0/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 mkdir p $HOME/containers/compose
 cd $HOME/containers/compose
@@ -180,22 +183,22 @@ networks:
 #########################################
 
 # now try these commands
-docker-compose up --build --no-start
-docker-compose start
+/usr/local/bin/docker-compose up --build --no-start
+/usr/local/bin/docker-compose start
 
 # Check that everything works opening in a browser this page: http://<VM_ip_address>:8080/ 
 
 # now we can stop everything
-docker-compose stop
-docker-compose down
+/usr/local/bin/docker-compose stop
+/usr/local/bin/docker-compose down
 docker images
 docker system prune
 
 #########################################
 #########  apptainer
 #########################################
-yum install -y epel-release
-yum install -y apptainer
+dnf install -y epel-release
+dnf install -y apptainer
 
 apptainer help
 apptainer pull docker://alpine
@@ -222,6 +225,7 @@ apptainer run lolcow_latest.sif
 
 # if you are interested in doing some practice, check this quick start page:
 # https://apptainer.org/docs/user/main/quick_start.html
+
 
 
 
