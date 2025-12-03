@@ -197,9 +197,11 @@ docker system prune
 #########################################
 #########  apptainer
 #########################################
+cd $HOME
 dnf install -y epel-release
 dnf install -y apptainer
 
+# now exit from root users, apptainer works even with user privileges
 apptainer help
 apptainer pull docker://alpine
 ls   # you should see a .sif file, the apptainer container
@@ -211,7 +213,7 @@ cat /etc/os-release|grep ^NAME
 apptainer run alpine_latest.sif cat /etc/os-release|grep ^NAME
 
 # Other examples, let's try lolcow
-apptainer pull docker://gcr.io/apptainer/lolcow
+apptainer pull docker://ghcr.io/apptainer/lolcow
 apptainer shell lolcow_latest.sif
 cowsay "hello IMAPP students"
 exit
@@ -225,6 +227,7 @@ apptainer run lolcow_latest.sif
 
 # if you are interested in doing some practice, check this quick start page:
 # https://apptainer.org/docs/user/main/quick_start.html
+
 
 
 
