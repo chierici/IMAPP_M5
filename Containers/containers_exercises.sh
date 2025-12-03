@@ -12,7 +12,7 @@ yum -y install nano wget curl git
 yum --enablerepo=devel install -y elinks
 
 # download the examples from github
-git clone https://github.com/chierici/IMAPP_2024.git
+git clone https://github.com/chierici/IMAPP_M5.git
 
 # install the docker repo
 curl https://download.docker.com/linux/centos/docker-ce.repo -o /etc/yum.repos.d/docker-ce.repo 
@@ -222,4 +222,5 @@ apptainer run lolcow_latest.sif
 
 # if you are interested in doing some practice, check this quick start page:
 # https://apptainer.org/docs/user/main/quick_start.html
+
 
