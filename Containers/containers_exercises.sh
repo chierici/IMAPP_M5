@@ -1,5 +1,5 @@
 #######################################
-####### INSTALL DOCKER on CENTOS8
+####### INSTALL DOCKER on Rocky 9
 #######################################
 
 # add port 8080 to firewall on google cloud dashboard. "default-allow-http"
@@ -8,8 +8,8 @@
 sudo -i
 
 # installing useful tools
-yum -y install nano wget curl git
-yum --enablerepo=devel install -y elinks
+dnf -y install nano wget curl git
+dnf --enablerepo=devel install -y elinks
 
 # download the examples from github
 git clone https://github.com/chierici/IMAPP_M5.git
@@ -19,7 +19,7 @@ curl https://download.docker.com/linux/centos/docker-ce.repo -o /etc/yum.repos.d
 sed -i -e "s/enabled=1/enabled=0/g" /etc/yum.repos.d/docker-ce.repo 
 
 # install docker
-yum --enablerepo=docker-ce-stable -y install docker-ce 
+dnf --enablerepo=docker-ce-stable -y install docker-ce 
 
 # start docker
 systemctl enable --now docker
@@ -57,10 +57,10 @@ docker ps -a
 ############################################
 # Interacting with docker-hub
 
-docker login
+docker login -u <userid>
 docker images
-docker tag 5c2538cecdc2 ataruz/imap_2023:ubuntu_with_ping_1.0
-docker push ataruz/imapp_2025:ubuntu_with_ping_1.0
+docker tag <copy_id_of_ubuntu_with_ping> ataruz/imapp_m5:ubuntu_with_ping_1.0
+docker push ataruz/imapp_m5:ubuntu_with_ping_1.0
 
 ############################################
 # Bulding docker images using Dockerfiles
@@ -222,6 +222,7 @@ apptainer run lolcow_latest.sif
 
 # if you are interested in doing some practice, check this quick start page:
 # https://apptainer.org/docs/user/main/quick_start.html
+
 
 
 
