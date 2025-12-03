@@ -60,13 +60,13 @@ docker ps -a
 docker login
 docker images
 docker tag 5c2538cecdc2 ataruz/imap_2023:ubuntu_with_ping_1.0
-docker push ataruz/imap_2023:ubuntu_with_ping_1.0
+docker push ataruz/imapp_2025:ubuntu_with_ping_1.0
 
 ############################################
 # Bulding docker images using Dockerfiles
 
 mkdir -p containers/simple
-cd IMAPP_2023/Containers/
+cd IMAPP_M5/Containers/
 cp Dockerfile index.html ~/containers/simple/
 cd ~/containers/simple/
 
@@ -222,5 +222,6 @@ apptainer run lolcow_latest.sif
 
 # if you are interested in doing some practice, check this quick start page:
 # https://apptainer.org/docs/user/main/quick_start.html
+
 
 
