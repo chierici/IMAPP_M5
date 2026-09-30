@@ -144,17 +144,12 @@ docker volume rm <volume_name>
 #########  Docker compose
 #########################################
 cd $HOME
-curl -L "https://github.com/docker/compose/releases/download/v5.0.0/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
-mkdir p $HOME/containers/compose
-cd $HOME/containers/compose
-nano docker-compose.yml
+nano compose.yml
 
 # copy this file into the editor window
-version: '3'
 services:
    database:
-      image: mysql:5.7
+      image: mysql:8.4
       environment:
          - MYSQL_DATABASE=wordpress
          - MYSQL_USER=wordpress
