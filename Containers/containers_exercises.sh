@@ -1,5 +1,5 @@
 #######################################
-####### INSTALL DOCKER on Rocky 9
+####### INSTALL DOCKER on Almalinux 9
 #######################################
 
 # add port 8080 to firewall on google cloud dashboard. See teacher screen.
@@ -8,18 +8,16 @@
 sudo -i
 
 # installing useful tools
-dnf -y install nano wget curl git
-dnf --enablerepo=devel install -y elinks
+dnf -y install nano wget curl git elinks
 
 # download the examples from github
 git clone https://github.com/chierici/IMAPP_M5.git
 
 # install the docker repo
-curl https://download.docker.com/linux/centos/docker-ce.repo -o /etc/yum.repos.d/docker-ce.repo 
-sed -i -e "s/enabled=1/enabled=0/g" /etc/yum.repos.d/docker-ce.repo 
+dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
 
 # install docker
-dnf --enablerepo=docker-ce-stable -y install docker-ce 
+dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 # start docker
 systemctl enable --now docker
@@ -109,6 +107,9 @@ ps -ef
 # exit the container with ctrl+d
 docker stop <docker ID>
 
+# Try again to reach the web page, you should get an error:
+elinks http://<VM_ip_address>:8080
+
 ####################################
 ####  Docker volumes
 
@@ -178,14 +179,14 @@ networks:
 #########################################
 
 # now try these commands
-/usr/local/bin/docker-compose up --build --no-start
-/usr/local/bin/docker-compose start
+docker compose up --build --no-start
+docker compose start
 
 # Check that everything works opening in a browser this page: http://<VM_ip_address>:8080/ 
 
 # now we can stop everything
-/usr/local/bin/docker-compose stop
-/usr/local/bin/docker-compose down
+docker compose stop
+docker compose down
 docker images
 docker system prune
 
@@ -196,12 +197,12 @@ cd $HOME
 dnf install -y epel-release
 dnf install -y apptainer
 
-# now exit from root users, apptainer works even with user privileges
+# now exit from root users, apptainer works even with user privileges (tipe logout or ctrl-d)
 apptainer help
 apptainer pull docker://alpine
 ls   # you should see a .sif file, the apptainer container
 
-# with the following command you should see "Rocky Linux", you are not inside a container
+# with the following command you should see "Almalinux", you are not inside a container
 cat /etc/os-release|grep ^NAME 
 
 # with the following command you should see "Alpine Linux", you execute the command inside the container
@@ -215,7 +216,8 @@ exit
 
 apptainer exec lolcow_latest.sif cowsay "IMAPP rocks"
 
-# Apptainer containers may contain runscripts. These are user-defined scripts that define the actions a container should perform when someone runs it. 
+# Apptainer containers may contain runscripts. These are user-defined scripts that define the actions a container should perform 
+# when someone runs it. 
 # The runscript can be triggered with the run command, or simply by calling the container as though it were an executable.
 
 apptainer run lolcow_latest.sif 
